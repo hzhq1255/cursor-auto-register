@@ -40,7 +40,11 @@ def handle_turnstile(tab):
                 elif tab.ele("Account Settings"):
                     info("检测到账户设置页面，检查是否有验证需要处理...")
                     page_ready = True
-
+                else:
+                    info("未检测到验证页面，继续下一步")
+                    info("当前页面内容:")
+                    info(tab.html())
+                    break
                 # 即使页面已经准备好，也检查是否有Turnstile验证需要处理
                 info("检测 Turnstile 验证...")
                 try:
@@ -166,7 +170,7 @@ def sign_up_account(browser, tab, account_info):
     if tab.ele("verify the user is human. Please try again.") or tab.ele(
         "Can't verify the user is human. Please try again."
     ):
-        info("检测到turnstile验证失败，正在重试...")
+        info("人机验证,检测到turnstile验证失败，正在重试...")
         return "EMAIL_USED"
 
     try:
